@@ -136,7 +136,7 @@ export default function CallInterface() {
         <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
           <div className="flex flex-col items-start gap-4 sm:flex-row sm:items-center">
             <h1 className="text-2xl font-bold text-text-primary">
-              Interface d'appel
+              Journal d'appel
             </h1>
             {callStartTime ? (
               <button
