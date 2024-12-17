@@ -12,7 +12,11 @@
   "dependencies": {
     "@headlessui/react": "^1.7.18",
     "@supabase/supabase-js": "^2.39.7",
+<<<<<<< HEAD
     "axios": "^1.6.7",
+=======
+    "axios": "^1.7.9",
+>>>>>>> f8b2f00 (Api version 2 sans lag)
     "date-fns": "^3.6.0",
     "lucide-react": "^0.344.0",
     "react": "^18.3.1",

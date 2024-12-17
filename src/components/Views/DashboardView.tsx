@@ -7,6 +7,10 @@ import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import {fetchOrdersAndCalculateStats,DriverStats } from '../../services/driverService';
 import { useAuthStore } from '../../stores/authStore';
+<<<<<<< HEAD
+=======
+import { getTotalRevenue } from '../../services/driverServiceApi';
+>>>>>>> f8b2f00 (Api version 2 sans lag)
 
 interface StatCardProps {
   title: string;
@@ -48,7 +52,11 @@ export default function DashboardView() {
   const today = new Date();
   const [startDate, setStartDate] = useState<Date | null>(today);
   const [endDate, setEndDate] = useState<Date | null>(today);
+<<<<<<< HEAD
   const [stats, setStats] = useState<DriverStats | null>(null);
+=======
+  const [stats, setStats] = useState<any | null>(null);
+>>>>>>> f8b2f00 (Api version 2 sans lag)
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const { workspace } = useAuthStore();
@@ -78,6 +86,12 @@ export default function DashboardView() {
     adjustedDate.setHours(0, 0, 0, 0);  // Réinitialiser l'heure, les minutes, les secondes et les millisecondes
     return adjustedDate;
   };
+<<<<<<< HEAD
+=======
+  function formatDate(date:Date) {
+    return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+}
+>>>>>>> f8b2f00 (Api version 2 sans lag)
   
   const handleFetchStats = async () => {
     if (period === 'custom' && (!startDate || !endDate)) {
@@ -95,38 +109,68 @@ export default function DashboardView() {
     switch (period) {
       case 'today': {
         const startOfDay = setToMidnight(today); // Cloné et ramené à minuit
+<<<<<<< HEAD
         formattedStartDate = startOfDay.toISOString();
         formattedEndDate = today.toISOString(); // Date actuelle avec l'heure courante
+=======
+        formattedStartDate = formatDate(startOfDay);
+        formattedEndDate = formatDate(today); // Date actuelle avec l'heure courante
+>>>>>>> f8b2f00 (Api version 2 sans lag)
         break;
       }
       case '7d': {
         const startDate = setToMidnight(new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000)); // 7 jours avant, minuit
+<<<<<<< HEAD
         formattedStartDate = startDate.toISOString();
         formattedEndDate = today.toISOString();
+=======
+        formattedStartDate = formatDate(startDate);;
+        formattedEndDate = formatDate(today);
+>>>>>>> f8b2f00 (Api version 2 sans lag)
         break;
       }
       case '14d': {
         const startDate = setToMidnight(new Date(today.getTime() - 14 * 24 * 60 * 60 * 1000)); // 14 jours avant, minuit
+<<<<<<< HEAD
         formattedStartDate = startDate.toISOString();
         formattedEndDate = today.toISOString();
+=======
+        formattedStartDate = formatDate(startDate);
+        formattedEndDate = formatDate(today);
+>>>>>>> f8b2f00 (Api version 2 sans lag)
         break;
       }
       case '1m': {
         const startDate = setToMidnight(new Date(new Date(today).setMonth(today.getMonth() - 1))); // 1 mois avant, minuit
+<<<<<<< HEAD
         formattedStartDate = startDate.toISOString();
         formattedEndDate = today.toISOString();
+=======
+        formattedStartDate = formatDate(startDate);;
+        formattedEndDate = formatDate(today);
+>>>>>>> f8b2f00 (Api version 2 sans lag)
         break;
       }
       case '3m': {
         const startDate = setToMidnight(new Date(new Date(today).setMonth(today.getMonth() - 3))); // 3 mois avant, minuit
+<<<<<<< HEAD
         formattedStartDate = startDate.toISOString();
         formattedEndDate = today.toISOString();
+=======
+        formattedStartDate = formatDate(startDate);;
+        formattedEndDate = formatDate(today);
+>>>>>>> f8b2f00 (Api version 2 sans lag)
         break;
       }
       case 'custom': {
         if (startDate && endDate) {
           formattedStartDate = setToMidnight(startDate).toISOString(); // Start à minuit
           formattedEndDate = endDate.toISOString(); // End avec l'heure courante
+<<<<<<< HEAD
+=======
+          formattedStartDate = formatDate(setToMidnight(startDate));;
+          formattedEndDate = formatDate(endDate);
+>>>>>>> f8b2f00 (Api version 2 sans lag)
         } else {
           setError('Veuillez sélectionner une période personnalisée valide.');
           setLoading(false);
@@ -141,8 +185,13 @@ export default function DashboardView() {
     console.log('data select', formattedStartDate, formattedEndDate);
   
     try {
+<<<<<<< HEAD
       const result = await fetchOrdersAndCalculateStats(formattedStartDate, formattedEndDate,workspace?.id);
       setStats(result);
+=======
+      const result = await getTotalRevenue(workspace?.id,formattedStartDate, formattedEndDate);
+      setStats(result.data);
+>>>>>>> f8b2f00 (Api version 2 sans lag)
       console.log('stats', result, period);
     } catch (err: any) {
       setError('Erreur lors de la récupération des statistiques.');
@@ -251,7 +300,11 @@ export default function DashboardView() {
         <StatCard
         isLoading={loading}
           title={`CA Généré ${getPeriodLabel()}`}
+<<<<<<< HEAD
           value={`${stats?.totalRevenue} FCFA`}
+=======
+          value={`${stats?.totalCA} FCFA`}
+>>>>>>> f8b2f00 (Api version 2 sans lag)
           icon={<TrendingUp className="w-5 h-5 sm:w-6 sm:h-6 text-accent-success" />}
           trend={8}
           trendLabel="vs période précédente"
@@ -259,7 +312,11 @@ export default function DashboardView() {
         <StatCard
         isLoading={loading}
           title={`Noyau dur ${getPeriodLabel()}`}
+<<<<<<< HEAD
           value={`${stats?.coreDrivers}`}
+=======
+          value={`${stats?.total_noyaux_durs}`}
+>>>>>>> f8b2f00 (Api version 2 sans lag)
           icon={<UserCheck className="w-5 h-5 sm:w-6 sm:h-6 text-accent" />}
           trend={-3}
           trendLabel="vs période précédente"
@@ -267,7 +324,11 @@ export default function DashboardView() {
         <StatCard
         isLoading={loading}
           title={`Électrons ${getPeriodLabel()}`}
+<<<<<<< HEAD
           value={`${stats?.electrons}`}
+=======
+          value={`${stats?.total_electrons}`}
+>>>>>>> f8b2f00 (Api version 2 sans lag)
           icon={<Target className="w-5 h-5 sm:w-6 sm:h-6 text-accent-warning" />}
           trend={15}
           trendLabel="vs période précédente"

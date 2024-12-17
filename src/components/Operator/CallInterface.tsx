@@ -13,6 +13,10 @@ import {
   getDriversWithCarsAndCourse,
 } from "../../services/driverService";
 import { useAuthStore } from "../../stores/authStore";
+<<<<<<< HEAD
+=======
+import { ApiDriver, getDrivers } from "../../services/driverServiceApi";
+>>>>>>> f8b2f00 (Api version 2 sans lag)
 
 interface CallLog {
   id: string;
@@ -25,13 +29,21 @@ interface CallLog {
 
 export default function CallInterface() {
   const [currentDriverIndex, setCurrentDriverIndex] = useState(0);
+<<<<<<< HEAD
   const [currentDriver, setCurrentDriver] = useState<Driver | null>();
+=======
+  const [currentDriver, setCurrentDriver] = useState<ApiDriver | null>();
+>>>>>>> f8b2f00 (Api version 2 sans lag)
   const [callNote, setCallNote] = useState("");
   const [callStatus, setCallStatus] = useState("");
   const [callbackDate, setCallbackDate] = useState<Date | null>(null);
   const [callStartTime, setCallStartTime] = useState<Date | null>(null);
   const [callHistory, setCallHistory] = useState<Record<string, CallLog[]>>({});
+<<<<<<< HEAD
   const [drivers, setDrivers] = useState<Driver[]>([]); // Liste complète
+=======
+  const [drivers, setDrivers] = useState<ApiDriver[]>([]); // Liste complète
+>>>>>>> f8b2f00 (Api version 2 sans lag)
   const [loading, setLoading] = useState<boolean>(true);
   const { workspace } = useAuthStore();
 
@@ -101,6 +113,7 @@ export default function CallInterface() {
     handleNext();
   };
 
+<<<<<<< HEAD
   const fetchDrivers = async () => {
     setLoading(true);
     const result = await getDriversWithCarsAndCourse(workspace?.id);
@@ -108,6 +121,14 @@ export default function CallInterface() {
     if (result.success && result.data) {
       setDrivers(result.data);
       setCurrentDriver(result.data[0]);
+=======
+  const fetchDrivers = async (driver_id?:string) => {
+    setLoading(true);
+    const result = await getDrivers(workspace?.id,driver_id);
+    console.log(result.data);
+    if (result.success && result.data) {
+      setCurrentDriver(result.data);
+>>>>>>> f8b2f00 (Api version 2 sans lag)
     } else {
       console.error(result.error); // Afficher une erreur si elle existe
     }
@@ -117,9 +138,15 @@ export default function CallInterface() {
   useEffect(() => {
     fetchDrivers();
   }, [workspace]);
+<<<<<<< HEAD
   useEffect(() => {
     setCurrentDriver(drivers[currentDriverIndex]);
   }, [currentDriverIndex]);
+=======
+  // useEffect(() => {
+  //   setCurrentDriver(drivers[currentDriverIndex]);
+  // }, [currentDriverIndex]);
+>>>>>>> f8b2f00 (Api version 2 sans lag)
 
   if( loading){
     return (<div className="flex items-center justify-center min-h-screen p-4 bg-dark sm:p-6 lg:p-8">
@@ -129,14 +156,29 @@ export default function CallInterface() {
       </div>
       
     </div>)
+<<<<<<< HEAD
   } 
+=======
+  } else if(currentDriver==null){
+    return (<div className="flex items-center justify-center min-h-screen p-4 bg-dark sm:p-6 lg:p-8">
+      <div className="flex flex-col items-center p-8 glass-card">
+        <p className="mt-4 text-text-secondary">Current not fund</p>
+      </div>
+      
+    </div>)
+  }
+>>>>>>> f8b2f00 (Api version 2 sans lag)
   return (
     <div className="min-h-screen p-4 bg-dark sm:p-6 lg:p-8">
       <div className="mx-auto space-y-6 max-w-7xl">
         <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
           <div className="flex flex-col items-start gap-4 sm:flex-row sm:items-center">
             <h1 className="text-2xl font-bold text-text-primary">
+<<<<<<< HEAD
               Journal d'appel
+=======
+              Interface d'appel
+>>>>>>> f8b2f00 (Api version 2 sans lag)
             </h1>
             {callStartTime ? (
               <button
@@ -178,7 +220,11 @@ export default function CallInterface() {
 
             <div className="flex items-center justify-between gap-4">
               <button
+<<<<<<< HEAD
                 onClick={handlePrevious}
+=======
+                onClick={()=>fetchDrivers(currentDriver.previous)}
+>>>>>>> f8b2f00 (Api version 2 sans lag)
                 className="glass-button text-white flex items-center gap-2 min-w-[140px] justify-center"
               >
                 <ChevronLeft className="w-5 h-5" />
@@ -194,7 +240,11 @@ export default function CallInterface() {
               </button>
 
               <button
+<<<<<<< HEAD
                 onClick={handleNext}
+=======
+                onClick={()=>fetchDrivers(currentDriver.next)}
+>>>>>>> f8b2f00 (Api version 2 sans lag)
                 className="glass-button text-white flex items-center gap-2 min-w-[140px] justify-center"
               >
                 <span>Passer</span>

@@ -5,6 +5,10 @@ import "react-datepicker/dist/react-datepicker.css";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Area } from 'recharts';
 import { DriverDayStats, fetchOrdersAndCalculateStatsForEachDay } from '../../services/driverService';
 import { useAuthStore } from '../../stores/authStore';
+<<<<<<< HEAD
+=======
+import { getDayRevenue } from '../../services/driverServiceApi';
+>>>>>>> f8b2f00 (Api version 2 sans lag)
 
 const data = [
   { date: '23/11/24', revenue: 1800000, calls: 450, avgRevenue: 2200000, avgCalls: 520 },
@@ -41,6 +45,12 @@ export default function RevenueAnalysis() {
     adjustedDate.setHours(0, 0, 0, 0);  // Réinitialiser l'heure, les minutes, les secondes et les millisecondes
     return adjustedDate;
   };
+<<<<<<< HEAD
+=======
+  function formatDate(date:Date) {
+    return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+}
+>>>>>>> f8b2f00 (Api version 2 sans lag)
   const { workspace } = useAuthStore();
 
   
@@ -51,7 +61,11 @@ export default function RevenueAnalysis() {
     revenue: true,
     calls: true
   });
+<<<<<<< HEAD
   const [stats, setStats] = useState<DriverDayStats[]>([]);
+=======
+  const [stats, setStats] = useState<any>([]);
+>>>>>>> f8b2f00 (Api version 2 sans lag)
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -69,6 +83,11 @@ export default function RevenueAnalysis() {
         if (startDate && endDate) {
           formattedStartDate = setToMidnight(startDate).toISOString(); // Start à minuit
           formattedEndDate = endDate.toISOString(); // End avec l'heure courante
+<<<<<<< HEAD
+=======
+          formattedStartDate = formatDate(setToMidnight(startDate));;
+          formattedEndDate = formatDate(endDate);
+>>>>>>> f8b2f00 (Api version 2 sans lag)
         } else {
           setError('Veuillez sélectionner une période personnalisée valide.');
           setLoading(false);
@@ -79,8 +98,14 @@ export default function RevenueAnalysis() {
   
     
     try {
+<<<<<<< HEAD
       const result = await fetchOrdersAndCalculateStatsForEachDay(formattedStartDate, formattedEndDate,workspace?.id);
       setStats(result);
+=======
+      const result = await getDayRevenue(workspace?.id,formattedStartDate, formattedEndDate);
+      console.log('bienvenu',result)
+      setStats(result.data);
+>>>>>>> f8b2f00 (Api version 2 sans lag)
     } catch (err: any) {
       setError('Erreur lors de la récupération des statistiques.');
       console.error(err);
@@ -100,9 +125,15 @@ export default function RevenueAnalysis() {
 
 
   return (
+<<<<<<< HEAD
     <div className="h-full flex flex-col">
       <div className="p-6 border-b border-white/10">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+=======
+    <div className="flex flex-col h-full">
+      <div className="p-6 border-b border-white/10">
+        <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
+>>>>>>> f8b2f00 (Api version 2 sans lag)
           <h3 className="text-lg font-semibold text-text-primary">Analyse des Revenus</h3>
           
           <div className="relative">
@@ -119,12 +150,20 @@ export default function RevenueAnalysis() {
               className="glass-input px-4 py-2 pl-10 [&:not(:placeholder-shown)]:text-black dark:text-text-primary"
               dateFormat="dd/MM/yyyy"
             />
+<<<<<<< HEAD
             <Calendar className="w-4 h-4 text-text-secondary absolute left-3 top-3" />
+=======
+            <Calendar className="absolute w-4 h-4 text-text-secondary left-3 top-3" />
+>>>>>>> f8b2f00 (Api version 2 sans lag)
           </div>
         </div>
       </div>
 
+<<<<<<< HEAD
       <div className="p-6 flex-1 flex flex-col">
+=======
+      <div className="flex flex-col flex-1 p-6">
+>>>>>>> f8b2f00 (Api version 2 sans lag)
         <div className="flex flex-wrap gap-3 mb-6">
           <MetricToggle
             label="Revenus"
@@ -142,9 +181,15 @@ export default function RevenueAnalysis() {
 
         <div className="flex-1 min-h-0">
           <ResponsiveContainer width="100%" height="100%">
+<<<<<<< HEAD
             <LineChart data={stats} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
               <defs>
                 <linearGradient id="totalRevenueGradient" x1="0" y1="0" x2="0" y2="1">
+=======
+            <LineChart data={stats} margin={{ top: 10, right: 30, left: 20, bottom: 5 }}>
+              <defs>
+                <linearGradient id="totalGradient" x1="0" y1="0" x2="0" y2="1">
+>>>>>>> f8b2f00 (Api version 2 sans lag)
                   <stop offset="5%" stopColor="#38BDF8" stopOpacity={0.2}/>
                   <stop offset="95%" stopColor="#38BDF8" stopOpacity={0}/>
                 </linearGradient>
@@ -161,7 +206,11 @@ export default function RevenueAnalysis() {
                 tick={{ fill: '#94A3B8' }}
               />
               <YAxis 
+<<<<<<< HEAD
                 yAxisId="totalRevenue"
+=======
+                yAxisId="total"
+>>>>>>> f8b2f00 (Api version 2 sans lag)
                 stroke="#94A3B8"
                 tick={{ fill: '#94A3B8' }}
                 tickFormatter={(value) => `${(value/1000000).toFixed(1)}M`}
@@ -186,6 +235,7 @@ export default function RevenueAnalysis() {
               {metrics.revenue && (
                 <>
                   <Line
+<<<<<<< HEAD
                     yAxisId="totalRevenue"
                     type="monotone"
                     dataKey="totalRevenue"
@@ -202,6 +252,24 @@ export default function RevenueAnalysis() {
                     name="Moyenne revenus (3M)"
                     stroke="#38BDF8"
                     strokeDasharray="5 5"
+=======
+                    yAxisId="total"
+                    type="monotone"
+                    dataKey="total"
+                    stroke="#38BDF8"
+                    strokeWidth={2}
+                    dot={{ stroke: '#38BDF8', strokeWidth: 2 }}
+                    activeDot={{ r: 12, stroke: '#38BDF8', strokeWidth: 2 }}
+                    name="Revenus (FCFA)"
+                  />
+                  <Line
+                    yAxisId="total"
+                    type="monotone"
+                    dataKey="ca_average"
+                    name="Moyenne revenus (3M)"
+                    stroke="#38BDF8"
+                    strokeDasharray="7 7"
+>>>>>>> f8b2f00 (Api version 2 sans lag)
                     dot={false}
                     strokeWidth={2}
                   />

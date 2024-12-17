@@ -4,6 +4,10 @@ import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import { fetchOrdersAndCalculateStatsForEachDay,DriverDayStats } from '../../services/driverService';
 import { useAuthStore } from '../../stores/authStore';
+<<<<<<< HEAD
+=======
+import { getCoreEletron } from '../../services/driverServiceApi';
+>>>>>>> f8b2f00 (Api version 2 sans lag)
 
 const data = [
   {
@@ -71,7 +75,11 @@ export default function DriverSegmentsTable() {
   const [startDate, setStartDate] = useState<Date | null>(new Date('2024-11-23'));
   const [endDate, setEndDate] = useState<Date | null>(new Date('2024-11-30'));
   const [showDatePicker, setShowDatePicker] = useState(false);
+<<<<<<< HEAD
   const [stats, setStats] = useState<DriverDayStats[] | null>([]);
+=======
+  const [stats, setStats] = useState<any | null>([]);
+>>>>>>> f8b2f00 (Api version 2 sans lag)
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const handlePeriodChange = (newPeriod: Period) => {
@@ -88,7 +96,13 @@ export default function DriverSegmentsTable() {
     adjustedDate.setHours(0, 0, 0, 0);  // Réinitialiser l'heure, les minutes, les secondes et les millisecondes
     return adjustedDate;
   };
+<<<<<<< HEAD
   
+=======
+  function formatDate(date:Date) {
+    return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+}
+>>>>>>> f8b2f00 (Api version 2 sans lag)
   const handleFetchStats = async () => {
     if (period === 'custom' && (!startDate || !endDate)) {
       setError('Veuillez sélectionner une période valide.');
@@ -105,26 +119,46 @@ export default function DriverSegmentsTable() {
     switch (period) {
       case '7d': {
         const startDate = setToMidnight(new Date(today.getTime() - 6 * 24 * 60 * 60 * 1000)); // 7 jours avant, minuit
+<<<<<<< HEAD
         formattedStartDate = startDate.toISOString();
         formattedEndDate = today.toISOString();
+=======
+        formattedStartDate = formatDate(startDate);;
+        formattedEndDate = formatDate(today);
+>>>>>>> f8b2f00 (Api version 2 sans lag)
         break;
       }
       case '1m': {
         const startDate = setToMidnight(new Date(new Date(today).setMonth(today.getMonth() - 1))); // 1 mois avant, minuit
+<<<<<<< HEAD
         formattedStartDate = startDate.toISOString();
         formattedEndDate = today.toISOString();
+=======
+        formattedStartDate = formatDate(startDate);;
+        formattedEndDate = formatDate(today);
+>>>>>>> f8b2f00 (Api version 2 sans lag)
         break;
       }
       case '3m': {
         const startDate = setToMidnight(new Date(new Date(today).setMonth(today.getMonth() - 3))); // 3 mois avant, minuit
+<<<<<<< HEAD
         formattedStartDate = startDate.toISOString();
         formattedEndDate = today.toISOString();
+=======
+        formattedStartDate = formatDate(startDate);;
+        formattedEndDate = formatDate(today);
+>>>>>>> f8b2f00 (Api version 2 sans lag)
         break;
       }
       case 'custom': {
         if (startDate && endDate) {
+<<<<<<< HEAD
           formattedStartDate = setToMidnight(startDate).toISOString(); // Start à minuit
           formattedEndDate = endDate.toISOString(); // End avec l'heure courante
+=======
+          formattedStartDate = formatDate(startDate);;
+          formattedEndDate = formatDate(endDate);
+>>>>>>> f8b2f00 (Api version 2 sans lag)
         } else {
           setError('Veuillez sélectionner une période personnalisée valide.');
           setLoading(false);
@@ -139,8 +173,13 @@ export default function DriverSegmentsTable() {
     console.log('data select', formattedStartDate, formattedEndDate);
   
     try {
+<<<<<<< HEAD
       const result = await fetchOrdersAndCalculateStatsForEachDay(formattedStartDate, formattedEndDate,workspace?.id);
       setStats(result);
+=======
+      const result = await getCoreEletron(workspace?.id,formattedStartDate, formattedEndDate);
+      setStats(result.data);
+>>>>>>> f8b2f00 (Api version 2 sans lag)
       console.log('stats', result, period);
     } catch (err: any) {
       setError('Erreur lors de la récupération des statistiques.');
@@ -159,9 +198,15 @@ export default function DriverSegmentsTable() {
 
 
   return (
+<<<<<<< HEAD
     <div className="h-full flex flex-col">
       <div className="p-6 border-b border-white/10">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+=======
+    <div className="flex flex-col h-full">
+      <div className="p-6 border-b border-white/10">
+        <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
+>>>>>>> f8b2f00 (Api version 2 sans lag)
           <h3 className="text-lg font-semibold text-text-primary">
             Évolution des Segments
           </h3>
@@ -220,11 +265,19 @@ export default function DriverSegmentsTable() {
         <table className="w-full">
           <thead>
             <tr className="border-b border-white/10">
+<<<<<<< HEAD
               <th className="p-4 text-left text-sm font-medium text-text-secondary">Date</th>
               <th className="p-4 text-left text-sm font-medium text-text-secondary">Noyau Dur</th>
               <th className="p-4 text-left text-sm font-medium text-text-secondary">Variation</th>
               <th className="p-4 text-left text-sm font-medium text-text-secondary">Électrons</th>
               <th className="p-4 text-left text-sm font-medium text-text-secondary">Variation</th>
+=======
+              <th className="p-4 text-sm font-medium text-left text-text-secondary">Date</th>
+              <th className="p-4 text-sm font-medium text-left text-text-secondary">Noyau Dur</th>
+              <th className="p-4 text-sm font-medium text-left text-text-secondary">Variation</th>
+              <th className="p-4 text-sm font-medium text-left text-text-secondary">Électrons</th>
+              <th className="p-4 text-sm font-medium text-left text-text-secondary">Variation</th>
+>>>>>>> f8b2f00 (Api version 2 sans lag)
             </tr>
           </thead>
           <tbody className="divide-y divide-white/10">
@@ -233,6 +286,7 @@ export default function DriverSegmentsTable() {
               <>
               <tr>
                <td colSpan={4}>
+<<<<<<< HEAD
                    <div className='w-24 h-24 text-white animate-spin  ' ></div>
                </td>
               </tr>
@@ -246,10 +300,26 @@ export default function DriverSegmentsTable() {
                     row.coreChange > 0 ? 'text-accent-success' : 'text-accent-warning'
                   }`}>
                     {row.coreChange > 0 ? (
+=======
+                   <div className='w-24 h-24 text-white animate-spin ' ></div>
+               </td>
+              </tr>
+              </>
+            ) : stats?.map((row:any, index:number) => (
+              <tr key={index} className="transition-colors hover:bg-white/5">
+                <td className="p-4 text-sm text-text-primary">{row.date}</td>
+                <td className="p-4 text-sm font-medium text-accent">{row.noyaux_durs}</td>
+                <td className="p-4">
+                  <div className={`flex items-center space-x-1 text-sm ${
+                    row.evolution_noyaux_durs > 0 ? 'text-accent-success' : 'text-accent-warning'
+                  }`}>
+                    {row.evolution_noyaux_durs > 0 ? (
+>>>>>>> f8b2f00 (Api version 2 sans lag)
                       <TrendingUp className="w-4 h-4" />
                     ) : (
                       <TrendingDown className="w-4 h-4" />
                     )}
+<<<<<<< HEAD
                     <span>{Math.abs(row.coreChange)}</span>
                   </div>
                 </td>
@@ -259,11 +329,26 @@ export default function DriverSegmentsTable() {
                     row.electronsChange > 0 ? 'text-accent-success' : 'text-accent-warning'
                   }`}>
                     {row.electronsChange > 0 ? (
+=======
+                    <span>{Math.abs(row.evolution_noyaux_durs)}</span>
+                  </div>
+                </td>
+                <td className="p-4 text-sm font-medium text-accent-warning">{row.electrons}</td>
+                <td className="p-4">
+                  <div className={`flex items-center space-x-1 text-sm ${
+                    row.evolution_electrons > 0 ? 'text-accent-success' : 'text-accent-warning'
+                  }`}>
+                    {row.evolution_electrons > 0 ? (
+>>>>>>> f8b2f00 (Api version 2 sans lag)
                       <TrendingUp className="w-4 h-4" />
                     ) : (
                       <TrendingDown className="w-4 h-4" />
                     )}
+<<<<<<< HEAD
                     <span>{Math.abs(row.electronsChange)}</span>
+=======
+                    <span>{Math.abs(row.evolution_electrons)}</span>
+>>>>>>> f8b2f00 (Api version 2 sans lag)
                   </div>
                 </td>
               </tr>

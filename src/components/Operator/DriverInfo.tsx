@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Phone, Calendar, TrendingUp, Plus, X } from "lucide-react";
 import { MockDriver } from "../../data/mockDrivers";
+<<<<<<< HEAD
 import { Driver } from "../../services/driverService";
 
 interface DriverInfoProps {
@@ -13,6 +14,21 @@ export default function DriverInfo({ driver }: DriverInfoProps) {
   const [additionalPhones, setAdditionalPhones] = useState<string[]>([]);
   const totalOrders = Object.values(driver.weeksOrders).reduce((acc, value) => (acc as number) + (value as number), 0);
   const numberOfWeeks = Object.keys(driver.weeksOrders).length;
+=======
+import { ApiDriver } from "../../services/driverServiceApi";
+
+interface DriverInfoProps {
+  driver: ApiDriver;
+}
+
+export default function DriverInfo({ driver }: DriverInfoProps) {
+  console.log('drivers',driver,driver.recentweeklyStats)
+  const [showPhoneInput, setShowPhoneInput] = useState(false);
+  const [newPhone, setNewPhone] = useState("");
+  const [additionalPhones, setAdditionalPhones] = useState<string[]>([]);
+  const totalOrders = Object.values(driver.recentweeklyStats).reduce((acc, value) => (acc as number) + (value as number), 0);
+  const numberOfWeeks = Object.keys(driver.recentweeklyStats).length;
+>>>>>>> f8b2f00 (Api version 2 sans lag)
   const averageRides = numberOfWeeks > 0 ? totalOrders as number / numberOfWeeks : 0;
 
   const handleAddPhone = () => {
@@ -58,10 +74,17 @@ export default function DriverInfo({ driver }: DriverInfoProps) {
           <div className="flex items-center mt-2 space-x-2">
             <span
               className={`px-3 py-1 rounded-full text-sm ${getStatusColor(
+<<<<<<< HEAD
                 driver.status
               )}`}
             >
               {driver.status}
+=======
+                "active" 
+              )}`}
+            >
+              {"Active"}
+>>>>>>> f8b2f00 (Api version 2 sans lag)
             </span>
             <span className="px-3 py-1 text-sm rounded-full bg-accent/20 text-accent">
               ID: {driver.driver_origin_id}
@@ -137,10 +160,15 @@ export default function DriverInfo({ driver }: DriverInfoProps) {
               <Calendar className="w-5 h-5 text-text-secondary" />
               <span className="text-white">
                 Dernière course:{" "}
+<<<<<<< HEAD
                 {driver.last_course
                   ? new Date(driver.last_course.booked_at).toLocaleDateString(
                       "fr-FR"
                     )
+=======
+                {driver.last_ride
+                  ?driver.last_ride
+>>>>>>> f8b2f00 (Api version 2 sans lag)
                   : `-`}
               </span>
             </div>
@@ -153,24 +181,41 @@ export default function DriverInfo({ driver }: DriverInfoProps) {
             </h3>
             <div className="flex items-center justify-between mb-4">
               <span className="text-2xl font-bold text-white">
+<<<<<<< HEAD
                 {averageRides ?? 0}
               </span>
               <div
                 className={`flex items-center space-x-1 ${
                   driver.trend > 0
+=======
+                {driver.performanceIndex ?? 0}
+              </span>
+              <div
+                className={`flex items-center space-x-1 ${
+                  driver.performanceEvolution > 0
+>>>>>>> f8b2f00 (Api version 2 sans lag)
                     ? "text-accent-success"
                     : "text-accent-warning"
                 }`}
               >
                 <TrendingUp className="w-4 h-4" />
                 <span className="text-sm">
+<<<<<<< HEAD
                   {driver.trend > 0 ? "+" : ""}
                   {driver.trend}%
+=======
+                  {driver.performanceEvolution > 0 ? "+" : ""}
+                  {driver.performanceEvolution > 0 ? driver.performanceEvolution : -1*(driver.performanceEvolution) }%
+>>>>>>> f8b2f00 (Api version 2 sans lag)
                 </span>
               </div>
             </div>
             <div className="grid grid-cols-4 gap-2">
+<<<<<<< HEAD
               {Object.entries(driver.weeksOrders).map(([key, value], index) => (
+=======
+              {Object.entries(driver.recentweeklyStats).map(([key, value], index) => (
+>>>>>>> f8b2f00 (Api version 2 sans lag)
                 <div key={index} className="p-2 text-center glass-card">
                   <div className="mb-1 text-xs text-text-secondary">
                     {key.toUpperCase()} {/* Affiche s1, s2, etc. */}
